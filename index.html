@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ФактПакет — данные для решений по проблемным активам</title>
+  <meta name="description" content="Сервис для проблемных активов: из пакета документов делаем данные для решения — факторы взыскания, качество залога, сценарная оценка сроков и вероятности возврата со ссылками на первоисточник." />
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --panel:#0f1626;
+      --panel2:#0d1423;
+      --text:#e9eefc;
+      --muted:#aab4d6;
+      --brand:#7c5cff;
+      --brand2:#38bdf8;
+      --line:rgba(255,255,255,.08);
+      --shadow: 0 16px 40px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius2:22px;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 10% 0%, rgba(124,92,255,.25), transparent 55%),
+                  radial-gradient(900px 700px at 85% 15%, rgba(56,189,248,.20), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
+
+    /* Top nav */
+    .top{
+      position:sticky; top:0; z-index:20;
+      background: rgba(11,15,23,.75);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .top .bar{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 0}
+    .logo{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
+    .mark{
+      width:34px; height:34px; border-radius:12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 10px 24px rgba(124,92,255,.25);
+    }
+    nav{display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+    nav a{color:var(--muted); font-size:14px; padding:8px 10px; border-radius:12px}
+    nav a:hover{color:var(--text); background:rgba(255,255,255,.06)}
+    .btn{
+      appearance:none; border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:600;
+      cursor:pointer;
+      transition: transform .08s ease, background .15s ease;
+    }
+    .btn:hover{background: rgba(255,255,255,.10)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      border-color: rgba(124,92,255,.35);
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(56,189,248,.80));
+      box-shadow: 0 14px 30px rgba(124,92,255,.20);
+    }
+
+    /* Hero */
+    .hero{padding:56px 0 22px}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){
+      .grid{grid-template-columns: 1fr;}
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--line);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+    }
+    .hero .card{padding:28px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      color: var(--muted);
+      font-size:13px;
+      padding:6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    .dot{width:8px; height:8px; border-radius:50%; background: var(--brand2); box-shadow: 0 0 0 6px rgba(56,189,248,.10)}
+    h1{margin:14px 0 10px; font-size:44px; line-height:1.05; letter-spacing:-.6px}
+    @media (max-width: 520px){h1{font-size:36px}}
+    .lead{color:var(--muted); font-size:16px; max-width: 58ch}
+    .cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+    .mini{margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; color:var(--muted); font-size:13px}
+    .pill{border:1px solid var(--line); background: rgba(255,255,255,.04); padding:6px 10px; border-radius:999px}
+
+    /* Demo card */
+    .demo{padding:22px}
+    .demo h3{margin:0 0 10px; font-size:16px; color:var(--text)}
+    .demo p{margin:0 0 14px; color:var(--muted); font-size:14px}
+    .mock{
+      background: linear-gradient(180deg, rgba(15,22,38,.95), rgba(13,20,35,.95));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:14px;
+      overflow:hidden;
+      position:relative;
+    }
+    .mock .row{display:flex; gap:10px; align-items:flex-start}
+    .side{
+      width:36%;
+      border-right:1px solid var(--line);
+      padding-right:10px;
+    }
+    .main{flex:1; padding-left:6px}
+    .tag{display:inline-flex; gap:8px; align-items:center; color:var(--muted); font-size:12px; border:1px solid var(--line); background: rgba(255,255,255,.03); padding:6px 10px; border-radius:999px; margin:6px 0}
+    .list{margin:10px 0 0; padding:0; list-style:none}
+    .list li{padding:10px 10px; border:1px solid var(--line); border-radius:14px; margin-bottom:8px; background: rgba(255,255,255,.03); color:var(--muted); font-size:13px}
+    .answer{border:1px solid var(--line); background: rgba(255,255,255,.03); border-radius:16px; padding:12px; color:var(--muted); font-size:13px}
+    .answer b{color:var(--text)}
+    .cite{margin-top:10px; display:flex; gap:8px; flex-wrap:wrap}
+    .cite span{font-size:12px; color:var(--muted); border:1px solid var(--line); background: rgba(255,255,255,.02); padding:6px 10px; border-radius:999px}
+    @media (max-width: 920px){
+      .side{width:42%}
+    }
+    @media (max-width: 620px){
+      .mock .row{flex-direction:column}
+      .side{width:100%; border-right:none; padding-right:0}
+      .main{padding-left:0}
+    }
+
+    /* Sections */
+    section{padding:48px 0}
+    .section-title{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:16px}
+    h2{margin:0; font-size:28px; letter-spacing:-.3px}
+    .sub{margin:0; color:var(--muted); font-size:14px; max-width:70ch}
+
+    .cols{display:grid; grid-template-columns: repeat(4, 1fr); gap:14px}
+    @media (max-width: 980px){.cols{grid-template-columns: repeat(2, 1fr)}}
+    @media (max-width: 520px){.cols{grid-template-columns: 1fr}}
+
+    .tile{padding:16px; border-radius: var(--radius); border:1px solid var(--line); background: rgba(255,255,255,.03)}
+    .tile h4{margin:0 0 8px; font-size:14px}
+    .tile p{margin:0; color:var(--muted); font-size:13px}
+
+    .steps{display:grid; grid-template-columns: repeat(5, 1fr); gap:12px}
+    @media (max-width: 980px){.steps{grid-template-columns: repeat(2, 1fr)}}
+    @media (max-width: 520px){.steps{grid-template-columns: 1fr}}
+    .step{padding:16px; border-radius: var(--radius); border:1px solid var(--line); background: rgba(255,255,255,.03)}
+    .num{width:30px; height:30px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: rgba(124,92,255,.18); border:1px solid rgba(124,92,255,.35)}
+    .step h4{margin:10px 0 6px; font-size:14px}
+    .step p{margin:0; color:var(--muted); font-size:13px}
+
+    .two{display:grid; grid-template-columns: 1.1fr .9fr; gap:16px}
+    @media (max-width: 920px){.two{grid-template-columns: 1fr}}
+
+    .box{padding:18px; border-radius: var(--radius2); border:1px solid var(--line); background: rgba(255,255,255,.03)}
+    .box h3{margin:0 0 10px; font-size:16px}
+    .box ul{margin:0; padding-left:18px; color:var(--muted)}
+    .box li{margin:8px 0; font-size:14px}
+
+    .pilot{
+      padding:22px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(124,92,255,.25);
+      background: linear-gradient(180deg, rgba(124,92,255,.10), rgba(255,255,255,.03));
+    }
+    .pilot .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .pilot .row .pill{background: rgba(255,255,255,.03)}
+
+    footer{padding:28px 0 42px; border-top:1px solid var(--line); color:var(--muted)}
+    footer .f{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap}
+    footer small{opacity:.9}
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; z-index:50;
+      display:none;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(6px);
+      padding:22px;
+    }
+    .modal.open{display:grid; place-items:center}
+    .modal .panel{
+      width:min(560px, 100%);
+      background: linear-gradient(180deg, rgba(15,22,38,.98), rgba(13,20,35,.98));
+      border:1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    .modal .head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:10px}
+    .modal h3{margin:0; font-size:18px}
+    .close{border:1px solid var(--line); background: rgba(255,255,255,.06); color:var(--text); border-radius:14px; padding:8px 10px; cursor:pointer}
+    .modal p{margin:0 0 14px; color:var(--muted); font-size:14px}
+    form{display:grid; gap:10px}
+    label{display:grid; gap:6px; font-size:13px; color:var(--muted)}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height:90px; resize:vertical}
+    .hint{font-size:12px; color:var(--muted); opacity:.85}
+
+    /* Smooth scroll */
+    html{scroll-behavior:smooth}
+  
+    /* Icons */
+    .icon{width:18px;height:18px;display:inline-block;vertical-align:middle;color:rgba(233,238,252,.92)}
+    .icon.muted{color:rgba(170,180,214,.95)}
+    .icon-wrap{width:36px;height:36px;display:grid;place-items:center;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);box-shadow:0 12px 26px rgba(0,0,0,.18)}
+    .tile-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .step-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .tag .icon{width:14px;height:14px;margin-right:6px}
+    .pill .icon{width:14px;height:14px;margin-right:6px}
+    .logo .mark svg{width:22px;height:22px}
+    .watermark{position:absolute;right:14px;top:14px;width:120px;height:120px;opacity:.08;pointer-events:none;filter:blur(.2px)}
+    .posrel{position:relative;overflow:hidden}
+
+  
+    /* --- Larger blocks / more breathing room (added) --- */
+    :root{
+      --max: 1200px;
+      --radius: 22px;
+      --radius2: 26px;
+    }
+    section{padding:72px 0}
+    .hero{padding:72px 0 34px}
+    .hero .card{padding:34px}
+    .grid{gap:28px}
+    .pill{padding:8px 14px; font-size:13px}
+    .icon{width:22px; height:22px}
+    .icon-wrap{width:46px; height:46px; border-radius:16px}
+    .tile{padding:22px}
+    .tile h4{font-size:16px; margin:0 0 10px}
+    .tile p{font-size:14px; line-height:1.5}
+    .steps{gap:16px}
+    .step{padding:22px}
+    .step h4{font-size:16px; margin:12px 0 8px}
+    .step p{font-size:14px; line-height:1.5}
+    .tag{padding:8px 12px; font-size:13px}
+    .watermark{width:150px; height:150px; opacity:.09}
+
+
+/* ---- Bigger blocks (v2) ---- */
+section{padding:86px 0}
+.hero{padding:92px 0}
+.wrap{max-width:1220px}
+.tiles{gap:22px}
+.tile{padding:28px; min-height:222px}
+.tile h4{font-size:20px}
+.tile p{font-size:15.5px; line-height:1.65}
+.steps{gap:22px}
+.step{padding:26px; min-height:180px}
+.step h4{font-size:19px}
+.step p{font-size:15.5px; line-height:1.65}
+.card{padding:28px}
+.tag{font-size:13px}
+.icon{width:22px;height:22px}
+.icon-wrap{width:46px;height:46px;border-radius:16px}
+.pill{padding:10px 14px}
+.pill .icon{width:16px;height:16px}
+.watermark{width:160px;height:160px;right:10px;top:10px}
+@media (max-width: 860px){
+  section{padding:72px 0}
+  .hero{padding:72px 0}
+  .tile{min-height:unset}
+  .step{min-height:unset}
+}
+
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="wrap">
+      <div class="bar">
+        <div class="logo" aria-label="ФактПакет">
+          <div class="mark" aria-hidden="true" style="display:grid;place-items:center">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8" />
+              <path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>ФактПакет</div>
+        </div>
+        <nav aria-label="Навигация">
+          <a href="#problem">Проблема</a>
+          <a href="#solution">Что делаем</a>
+          <a href="#how">Как работает</a>
+          <a href="#security">Безопасность</a>
+<button class="btn primary" id="openDemoTop">Связаться</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="grid">
+        <div class="card">
+          <h1>Экономика актива на фактах</h1>
+          <p class="lead">Превращаем пакет по проблемным активам в данные для решения: факторы взыскания, качество залога, сценарная оценка сроков и вероятности возврата — всё подтверждено ссылками на документы.</p>
+          <div class="cta">
+            <button class="btn primary" id="openDemoHero">Связаться</button>
+            <a class="btn" href="#how">Как это работает</a>
+          </div>
+          <div class="mini">
+            <span class="pill"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"/>
+            </svg>Факторы взыскания и риски по делу</span>
+            <span class="pill"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M9 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>Качество залога и комплектность</span>
+            <span class="pill"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M9 14l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>Каждый вывод подтверждён документом</span>
+          </div>
+        </div>
+
+        <div class="card demo posrel" aria-label="Пример интерфейса">
+          <svg class="watermark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <h3>Как выглядит результат</h3>
+          <p>Задаёте вопрос по делу или портфелю — получаете ответ и ссылку на первоисточник (документ/страница).</p>
+          <div class="mock">
+            <div class="row">
+              <div class="side">
+                <div class="tag"><svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.2 9.5A3 3 0 1 1 12 14v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"/></svg>Вопросы</div>
+                <ul class="list">
+                  <li>Какие факторы сильнее всего влияют на взыскание по делу?</li>
+                  <li>Что с залогом: комплектность, ограничения, стоп-факторы?</li>
+                  <li>Какие сценарии сроков и вероятности возврата по этому кейсу?</li>
+                </ul>
+              </div>
+              <div class="main">
+                <div class="tag"><svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"/></svg>Ответ с проверяемостью</div>
+                <div class="answer">
+                  <b>Сценарная оценка:</b> 12–18 мес (базовый), 18–24 мес (консервативный).<br>
+                  <b>Ключевые факторы:</b> стадия процесса, действия ФССП, комплектность залога, наличие ограничений.<br>
+                  <b>Что дозапросить:</b> отсутствует документ X, противоречие в Y.
+                  <div class="cite">
+                    <span>Выписка_ЕГРН_…</span>
+                    <span>стр. 2</span>
+                    <span>Постановление_ФССП_…</span>
+                    <span>стр. 1</span>
+                  </div>
+                </div>
+                <div class="tag" style="margin-top:10px"><svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Выходные артефакты</div>
+                <ul class="list">
+                  <li>Реестр дел/документов: ключевые поля + ссылки</li>
+                  <li>Карта пробелов и противоречий в пакете</li>
+                  <li>Сводка факторов взыскания/залога по каждому делу</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="problem">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>Что мешает быстро принимать решения по проблемным активам</h2>
+            <p class="sub">Когда данные спрятаны в разрозненных пакетах, решение опирается на ручной поиск и разные трактовки. Это замедляет работу и повышает риск ошибки.</p>
+          </div>
+        </div>
+        <div class="cols">
+          <div class="tile">
+            <div class="tile-top">
+              <div class="icon-wrap" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"/><path d="M9 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+              <h4>Разрозненные пакеты и версии</h4>
+            </div>
+            <p>Документы в разных папках, дубли, версии — нет единой картины по делу.</p>
+          </div>
+          <div class="tile">
+            <div class="tile-top">
+              <div class="icon-wrap" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+              <h4>Ручной поиск фактов</h4>
+            </div>
+            <p>Чтобы найти сумму, дату, стадию или ограничение, приходится перечитывать десятки файлов.</p>
+          </div>
+          <div class="tile">
+            <div class="tile-top">
+              <div class="icon-wrap" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h4>Неясное качество залога</h4>
+            </div>
+            <p>Комплектность и ограничения выявляются поздно — уже в момент сделки или реализации.</p>
+          </div>
+          <div class="tile">
+            <div class="tile-top">
+              <div class="icon-wrap" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 15l4-4 3 3 5-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h4>Нестабильные оценки</h4>
+            </div>
+            <p>Сроки и вероятность возврата расходятся между исполнителями: нет единой, проверяемой базы факторов.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="solution">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>Результат</h2>
+            <p class="sub">Мы превращаем документы в структурированные факторы и выводы, которые можно быстро проверить до первоисточника.</p>
+          </div>
+        </div>
+        <div class="cols">
+          <div class="tile">
+            <div class="tile-top">
+              <div class="icon-wrap" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"/><path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+              <h4>Единая картина по делу/портфелю</h4>
+            </div>
+            <p>Суммы, даты, стадия, ключевые события — в одном реестре.</p>
+          </div>
+          <div class="tile">
+            <div class="tile-top">
+              <div class="icon-wrap" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 15l4-4 3 3 5-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h4>Факторы взыскания</h4>
+            </div>
+            <p>Выделяем признаки, которые реально двигают сроки и вероятность возврата.</p>
+          </div>
+          <div class="tile">
+            <div class="tile-top">
+              <div class="icon-wrap" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h4>Качество залога</h4>
+            </div>
+            <p>Показываем комплектность, ограничения, риски и что нужно дозапросить.</p>
+          </div>
+          <div class="tile">
+            <div class="tile-top">
+              <div class="icon-wrap" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 1 0-7l1.2-1.2a5 5 0 0 1 7.1 7.1L17 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 0 1 0 7L12.8 19.2a5 5 0 1 1-7.1-7.1L7 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+              <h4>Проверяемость до документа</h4>
+            </div>
+            <p>Любой вывод можно открыть и подтвердить: ссылка → документ → страница.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>Как это работает</h2>
+            <p class="sub">От пакета документов до реестра факторов и выводов — понятный процесс.</p>
+          </div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-top">
+            <div class="num">1</div>
+            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+            <h4>Передача пакета</h4>
+            <p>Сканы/экспорт/папка по делам или портфелю.</p>
+          </div>
+          <div class="step">
+            <div class="step-top">
+            <div class="num">2</div>
+            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 7h10M7 12h10M7 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+            <h4>Приведение к порядку</h4>
+            <p>Убираем дубли, приводим к структуре, отмечаем проблемные места.</p>
+          </div>
+          <div class="step">
+            <div class="step-top">
+            <div class="num">3</div>
+            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 13a5 5 0 0 1 0-7l1.2-1.2a5 5 0 0 1 7.1 7.1L17 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 0 1 0 7L12.8 19.2a5 5 0 1 1-7.1-7.1L7 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+            <h4>Связность</h4>
+            <p>Привязываем документы к делу/объекту/стадии.</p>
+          </div>
+          <div class="step">
+            <div class="step-top">
+            <div class="num">4</div>
+            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+            <h4>Извлечение фактов и факторов</h4>
+            <p>Суммы, даты, статусы, ограничения, признаки залога и взыскания.</p>
+          </div>
+          <div class="step">
+            <div class="step-top">
+            <div class="num">5</div>
+            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+            <h4>Выдача результата</h4>
+            <p>Реестр (Excel/CSV), сводка факторов/рисков и ссылки на первоисточник.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="security">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>Безопасность и формат работы</h2>
+            <p class="sub">Работаем с чувствительными данными и согласуем формат взаимодействия под требования заказчика.</p>
+          </div>
+        </div>
+        <div class="two">
+          <div class="box">
+            <h3>Как работаем с данными</h3>
+            <ul>
+              <li>Доступ к данным — по согласованным правилам.</li>
+              <li>Раздельное хранение по проектам.</li>
+              <li>Контроль доступа и журналирование действий.</li>
+              <li>Возможность работать на тестовой/обезличенной выборке.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>Формат взаимодействия</h3>
+            <ul>
+              <li>Согласуем состав полей и структуру результата.</li>
+              <li>Отмечаем пробелы/противоречия и список дозапросов.</li>
+              <li>Передаём реестр и сводку факторов с подтверждением до документа.</li>
+              <li>Созваниваемся и разбираем результаты.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+</main>
+
+  <footer>
+    <div class="wrap">
+      <div class="f">
+        <div>
+          <div class="logo" style="margin-bottom:6px"><div class="mark" aria-hidden="true" style="display:grid;place-items:center">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8" />
+              <path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div><div>ФактПакет</div></div>
+        </div>
+        <div style="display:grid; gap:8px">
+          <small>Контакты: <a href="mailto:help@faktpaket.ru">help@faktpaket.ru</a></small>
+          <small>© 2026</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+    <div class="panel">
+      <div class="head">
+        <div>
+          <h3 id="demoTitle">Связаться</h3>
+          <p>Расскажите, с какими кейсами/портфелями работаете и какие вопросы нужно закрыть — предложим формат результата и пример на выборке.</p>
+        </div>
+        <button class="close" id="closeDemo" aria-label="Закрыть">×</button>
+      </div>
+
+      <form id="demoForm">
+        <label>
+          Имя
+          <input name="name" required placeholder="Константин" />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" required placeholder="help@faktpaket.ru" />
+        </label>
+        <label>
+          Компания
+          <input name="company" required placeholder="Банк / взыскание / проблемные активы" />
+        </label>
+        <label>
+          Что нужно разобрать
+          <textarea name="note" placeholder="Например: залоговые дела / портфель NPL — нужны факторы взыскания, качество залога и сценарная оценка сроков и вероятности возврата со ссылками на документы."></textarea>
+        </label>
+
+        <button class="btn primary" type="submit">Отправить →</button>
+        <div class="hint">Напишите свои вопросы и мы свяжемся с вами!</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('demoModal');
+    const openers = ['openDemoTop','openDemoHero'].map(id => document.getElementById(id));
+    const closeBtn = document.getElementById('closeDemo');
+
+    function openModal(){
+      modal.classList.add('open');
+      document.body.style.overflow='hidden';
+      const first = modal.querySelector('input[name="name"]');
+      setTimeout(()=>first && first.focus(), 50);
+    }
+    function closeModal(){
+      modal.classList.remove('open');
+      document.body.style.overflow='';
+    }
+
+    openers.forEach(btn => btn && btn.addEventListener('click', openModal));
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+
+    // mailto submit
+    const form = document.getElementById('demoForm');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = (data.get('name')||'').toString().trim();
+      const email = (data.get('email')||'').toString().trim();
+      const company = (data.get('company')||'').toString().trim();
+      const note = (data.get('note')||'').toString().trim();
+
+      const subject = encodeURIComponent('Запрос пилота сервиса ФактПакет');
+      const body = encodeURIComponent(
+        'Имя: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        'Компания: ' + company + '\n\n' +
+        'Описание пилота:\n' + (note || '-') + '\n\n' +
+        'Источник: лендинг ФактПакет (сервис)'
+      );
+
+      // TODO: замените email на ваш рабочий
+      window.location.href = `mailto:help@faktpaket.ru?subject=${subject}&body=${body}`;
+      closeModal();
+    });
+  </script>
+</body>
+</html>
