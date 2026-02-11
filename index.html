@@ -1,11 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ФактПакет — данные для решений по проблемным активам</title>
-  <meta name="description" content="Сервис для проблемных активов: из пакета документов делаем данные для решения — факторы взыскания, качество залога, сценарная оценка сроков и вероятности возврата со ссылками на первоисточник." />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ФактПакет — интеллектуальная автоматизация для банков</title>
+<meta content="Интеллектуальная автоматизация для банков: два продукта: СдалВсрок для учета и сопровождения активов и ЗакладнаяIQ для оценки ипотечных портфелей и подготовки отчетности в Банк России." name="description"/>
+<style>
     :root{
       --bg:#0b0f17;
       --panel:#0f1626;
@@ -25,9 +26,7 @@
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 10% 0%, rgba(124,92,255,.25), transparent 55%),
-                  radial-gradient(900px 700px at 85% 15%, rgba(56,189,248,.20), transparent 60%),
-                  var(--bg);
+      background: var(--bg);
       color:var(--text);
       line-height:1.45;
     }
@@ -36,7 +35,7 @@
 
     /* Top nav */
     .top{
-      position:sticky; top:0; z-index:20;
+      position:fixed; top:0; left:0; right:0; z-index:20;
       background: rgba(11,15,23,.75);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
@@ -146,14 +145,15 @@
     .sub{margin:0; color:var(--muted); font-size:14px; max-width:70ch}
 
     .cols{display:grid; grid-template-columns: repeat(4, 1fr); gap:14px}
+    #products .cols{grid-template-columns: repeat(3, 1fr); gap:22px}
     @media (max-width: 980px){.cols{grid-template-columns: repeat(2, 1fr)}}
-    @media (max-width: 520px){.cols{grid-template-columns: 1fr}}
+    @media (max-width: 520px){.cols, #products .cols{grid-template-columns: 1fr}}
 
     .tile{padding:16px; border-radius: var(--radius); border:1px solid var(--line); background: rgba(255,255,255,.03)}
     .tile h4{margin:0 0 8px; font-size:14px}
     .tile p{margin:0; color:var(--muted); font-size:13px}
 
-    .steps{display:grid; grid-template-columns: repeat(5, 1fr); gap:12px}
+    .steps{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px}
     @media (max-width: 980px){.steps{grid-template-columns: repeat(2, 1fr)}}
     @media (max-width: 520px){.steps{grid-template-columns: 1fr}}
     .step{padding:16px; border-radius: var(--radius); border:1px solid var(--line); background: rgba(255,255,255,.03)}
@@ -219,7 +219,8 @@
     .hint{font-size:12px; color:var(--muted); opacity:.85}
 
     /* Smooth scroll */
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth; scroll-padding-top:70px}
+    [id]{scroll-margin-top:70px}
   
     /* Icons */
     .icon{width:18px;height:18px;display:inline-block;vertical-align:middle;color:rgba(233,238,252,.92)}
@@ -234,7 +235,7 @@
     .posrel{position:relative;overflow:hidden}
 
   
-    /* --- Larger blocks / more breathing room (added) --- */
+    /* --- Larger blocks: more breathing room (added) --- */
     :root{
       --max: 1200px;
       --radius: 22px;
@@ -258,9 +259,46 @@
     .watermark{width:150px; height:150px; opacity:.09}
 
 
+/* ---- Hero full-width ---- */
+.hero{padding:0}
+.hero .wrap{max-width:none;padding:0}
+.hero .grid{display:block}
+.hero .card{
+  border:none;
+  border-radius:0;
+  background: none;
+  box-shadow:none;
+  min-height:100vh;
+  padding:0 40px 32px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.hero h1{font-size:52px;max-width:800px}
+.hero .lead{max-width:600px;margin-left:auto;margin-right:auto}
+.hero .cta{justify-content:center}
+.hero .mini{justify-content:center}
+@media(max-width:860px){
+  .hero .card{padding:72px 20px 56px}
+  .hero h1{font-size:38px}
+}
+@media(max-width:520px){
+  .hero h1{font-size:30px}
+}
+
 /* ---- Bigger blocks (v2) ---- */
-section{padding:86px 0}
-.hero{padding:92px 0}
+section{padding:48px 0}
+#products{
+  min-height:auto;
+  display:block;
+  padding:24px 0 48px;
+}
+#products > .wrap{width:100%}
+#products .product{margin-top:0}
+#products .product + .product{margin-top:100px}
+.hero{padding:0}
 .wrap{max-width:1220px}
 .tiles{gap:22px}
 .tile{padding:28px; min-height:222px}
@@ -284,345 +322,294 @@ section{padding:86px 0}
   .step{min-height:unset}
 }
 
+
+    /* Products */
+    .product{
+      margin-top:18px;
+      padding:0;
+      border:none;
+      border-radius:0;
+      background:none;
+      box-shadow:none;
+    }
+    .product + .product{margin-top:160px}
+    .product-head h3{margin:10px 0 6px; font-size:22px}
+    .product-head .sub{margin-bottom:28px}
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(124,92,255,.12);
+      color: var(--text);
+      font-weight:600; font-size:12px;
+    }
+    .product-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+
 </style>
 </head>
 <body>
-  <div class="top">
-    <div class="wrap">
-      <div class="bar">
-        <div class="logo" aria-label="ФактПакет">
-          <div class="mark" aria-hidden="true" style="display:grid;place-items:center">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8" />
-              <path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8" />
-              <path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div>ФактПакет</div>
-        </div>
-        <nav aria-label="Навигация">
-          <a href="#problem">Проблема</a>
-          <a href="#solution">Что делаем</a>
-          <a href="#how">Как работает</a>
-          <a href="#security">Безопасность</a>
+<div class="top">
+<div class="wrap">
+<div class="bar">
+<div aria-label="ФактПакет" class="logo">
+<div aria-hidden="true" class="mark" style="display:grid;place-items:center">
+<svg aria-hidden="true" class="icon" fill="none" viewbox="0 0 24 24">
+<path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"></path>
+<path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"></path>
+<path d="M9 12h6M9 15h6" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div>ФактПакет</div>
+</div>
+<nav aria-label="Навигация">
+<a href="#products">Продукты</a><a href="#product1">СдалВсрок</a><a href="#product2">ЗакладнаяIQ</a>
+<a href="#how">Как работает</a>
+<a href="#security">Безопасность</a>
 <button class="btn primary" id="openDemoTop">Связаться</button>
-        </nav>
-      </div>
-    </div>
-  </div>
+</nav>
+</div>
+</div>
+</div>
+<header class="hero">
+<div class="wrap">
+<div class="grid">
+<div class="card">
+<h1>Интеллектуальная автоматизация банковских процессов</h1>
+<p class="lead">Меньше ручной работы, быстрее расчеты и отчетность, прозрачная сверка по данным.</p>
+<div class="cta">
+<button class="btn primary" id="openDemoHero">Связаться</button>
+<a class="btn" href="#how">Как это работает</a>
+</div>
+<div class="mini">
+<span class="pill"><svg aria-hidden="true" class="icon" fill="none" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+<path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"></path>
+</svg>Прогноз поступлений по активу и портфелю</span>
+<span class="pill"><svg aria-hidden="true" class="icon" fill="none" viewbox="0 0 24 24">
+<path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"></path>
+<path d="M9 11h6" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+</svg>Быстрая оценка ипотечных закладных</span>
+<span class="pill"><svg aria-hidden="true" class="icon" fill="none" viewbox="0 0 24 24">
+<path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"></path>
+<path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"></path>
+<path d="M9 14l2 2 4-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>Отчетность в ЦБ с проверкой до документа</span>
+</div>
+</div>
 
-  <header class="hero">
-    <div class="wrap">
-      <div class="grid">
-        <div class="card">
-          <h1>Экономика актива на фактах</h1>
-          <p class="lead">Превращаем пакет по проблемным активам в данные для решения: факторы взыскания, качество залога, сценарная оценка сроков и вероятности возврата — всё подтверждено ссылками на документы.</p>
-          <div class="cta">
-            <button class="btn primary" id="openDemoHero">Связаться</button>
-            <a class="btn" href="#how">Как это работает</a>
-          </div>
-          <div class="mini">
-            <span class="pill"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"/>
-            </svg>Факторы взыскания и риски по делу</span>
-            <span class="pill"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M9 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>Качество залога и комплектность</span>
-            <span class="pill"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M9 14l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>Каждый вывод подтверждён документом</span>
-          </div>
-        </div>
-
-        <div class="card demo posrel" aria-label="Пример интерфейса">
-          <svg class="watermark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.2"/>
-            <path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-          <h3>Как выглядит результат</h3>
-          <p>Задаёте вопрос по делу или портфелю — получаете ответ и ссылку на первоисточник (документ/страница).</p>
-          <div class="mock">
-            <div class="row">
-              <div class="side">
-                <div class="tag"><svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.2 9.5A3 3 0 1 1 12 14v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"/></svg>Вопросы</div>
-                <ul class="list">
-                  <li>Какие факторы сильнее всего влияют на взыскание по делу?</li>
-                  <li>Что с залогом: комплектность, ограничения, стоп-факторы?</li>
-                  <li>Какие сценарии сроков и вероятности возврата по этому кейсу?</li>
-                </ul>
-              </div>
-              <div class="main">
-                <div class="tag"><svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"/></svg>Ответ с проверяемостью</div>
-                <div class="answer">
-                  <b>Сценарная оценка:</b> 12–18 мес (базовый), 18–24 мес (консервативный).<br>
-                  <b>Ключевые факторы:</b> стадия процесса, действия ФССП, комплектность залога, наличие ограничений.<br>
-                  <b>Что дозапросить:</b> отсутствует документ X, противоречие в Y.
-                  <div class="cite">
-                    <span>Выписка_ЕГРН_…</span>
-                    <span>стр. 2</span>
-                    <span>Постановление_ФССП_…</span>
-                    <span>стр. 1</span>
-                  </div>
-                </div>
-                <div class="tag" style="margin-top:10px"><svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Выходные артефакты</div>
-                <ul class="list">
-                  <li>Реестр дел/документов: ключевые поля + ссылки</li>
-                  <li>Карта пробелов и противоречий в пакете</li>
-                  <li>Сводка факторов взыскания/залога по каждому делу</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section id="problem">
-      <div class="wrap">
-        <div class="section-title">
-          <div>
-            <h2>Что мешает быстро принимать решения по проблемным активам</h2>
-            <p class="sub">Когда данные спрятаны в разрозненных пакетах, решение опирается на ручной поиск и разные трактовки. Это замедляет работу и повышает риск ошибки.</p>
-          </div>
-        </div>
-        <div class="cols">
-          <div class="tile">
-            <div class="tile-top">
-              <div class="icon-wrap" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"/><path d="M9 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </div>
-              <h4>Разрозненные пакеты и версии</h4>
-            </div>
-            <p>Документы в разных папках, дубли, версии — нет единой картины по делу.</p>
-          </div>
-          <div class="tile">
-            <div class="tile-top">
-              <div class="icon-wrap" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </div>
-              <h4>Ручной поиск фактов</h4>
-            </div>
-            <p>Чтобы найти сумму, дату, стадию или ограничение, приходится перечитывать десятки файлов.</p>
-          </div>
-          <div class="tile">
-            <div class="tile-top">
-              <div class="icon-wrap" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <h4>Неясное качество залога</h4>
-            </div>
-            <p>Комплектность и ограничения выявляются поздно — уже в момент сделки или реализации.</p>
-          </div>
-          <div class="tile">
-            <div class="tile-top">
-              <div class="icon-wrap" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 15l4-4 3 3 5-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <h4>Нестабильные оценки</h4>
-            </div>
-            <p>Сроки и вероятность возврата расходятся между исполнителями: нет единой, проверяемой базы факторов.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="solution">
-      <div class="wrap">
-        <div class="section-title">
-          <div>
-            <h2>Результат</h2>
-            <p class="sub">Мы превращаем документы в структурированные факторы и выводы, которые можно быстро проверить до первоисточника.</p>
-          </div>
-        </div>
-        <div class="cols">
-          <div class="tile">
-            <div class="tile-top">
-              <div class="icon-wrap" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"/><path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </div>
-              <h4>Единая картина по делу/портфелю</h4>
-            </div>
-            <p>Суммы, даты, стадия, ключевые события — в одном реестре.</p>
-          </div>
-          <div class="tile">
-            <div class="tile-top">
-              <div class="icon-wrap" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 15l4-4 3 3 5-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <h4>Факторы взыскания</h4>
-            </div>
-            <p>Выделяем признаки, которые реально двигают сроки и вероятность возврата.</p>
-          </div>
-          <div class="tile">
-            <div class="tile-top">
-              <div class="icon-wrap" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <h4>Качество залога</h4>
-            </div>
-            <p>Показываем комплектность, ограничения, риски и что нужно дозапросить.</p>
-          </div>
-          <div class="tile">
-            <div class="tile-top">
-              <div class="icon-wrap" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 1 0-7l1.2-1.2a5 5 0 0 1 7.1 7.1L17 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 0 1 0 7L12.8 19.2a5 5 0 1 1-7.1-7.1L7 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </div>
-              <h4>Проверяемость до документа</h4>
-            </div>
-            <p>Любой вывод можно открыть и подтвердить: ссылка → документ → страница.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="how">
-      <div class="wrap">
-        <div class="section-title">
-          <div>
-            <h2>Как это работает</h2>
-            <p class="sub">От пакета документов до реестра факторов и выводов — понятный процесс.</p>
-          </div>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <div class="step-top">
-            <div class="num">1</div>
-            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"/></svg>
-          </div>
-            <h4>Передача пакета</h4>
-            <p>Сканы/экспорт/папка по делам или портфелю.</p>
-          </div>
-          <div class="step">
-            <div class="step-top">
-            <div class="num">2</div>
-            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 7h10M7 12h10M7 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </div>
-            <h4>Приведение к порядку</h4>
-            <p>Убираем дубли, приводим к структуре, отмечаем проблемные места.</p>
-          </div>
-          <div class="step">
-            <div class="step-top">
-            <div class="num">3</div>
-            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 13a5 5 0 0 1 0-7l1.2-1.2a5 5 0 0 1 7.1 7.1L17 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 0 1 0 7L12.8 19.2a5 5 0 1 1-7.1-7.1L7 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </div>
-            <h4>Связность</h4>
-            <p>Привязываем документы к делу/объекту/стадии.</p>
-          </div>
-          <div class="step">
-            <div class="step-top">
-            <div class="num">4</div>
-            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </div>
-            <h4>Извлечение фактов и факторов</h4>
-            <p>Суммы, даты, статусы, ограничения, признаки залога и взыскания.</p>
-          </div>
-          <div class="step">
-            <div class="step-top">
-            <div class="num">5</div>
-            <svg class="icon muted" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"/></svg>
-          </div>
-            <h4>Выдача результата</h4>
-            <p>Реестр (Excel/CSV), сводка факторов/рисков и ссылки на первоисточник.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="security">
-      <div class="wrap">
-        <div class="section-title">
-          <div>
-            <h2>Безопасность и формат работы</h2>
-            <p class="sub">Работаем с чувствительными данными и согласуем формат взаимодействия под требования заказчика.</p>
-          </div>
-        </div>
-        <div class="two">
-          <div class="box">
-            <h3>Как работаем с данными</h3>
-            <ul>
-              <li>Доступ к данным — по согласованным правилам.</li>
-              <li>Раздельное хранение по проектам.</li>
-              <li>Контроль доступа и журналирование действий.</li>
-              <li>Возможность работать на тестовой/обезличенной выборке.</li>
-            </ul>
-          </div>
-          <div class="box">
-            <h3>Формат взаимодействия</h3>
-            <ul>
-              <li>Согласуем состав полей и структуру результата.</li>
-              <li>Отмечаем пробелы/противоречия и список дозапросов.</li>
-              <li>Передаём реестр и сводку факторов с подтверждением до документа.</li>
-              <li>Созваниваемся и разбираем результаты.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+</div>
+</div>
+</header>
+<main>
+<section id="products">
+<div class="wrap">
+<div class="product" id="product1">
+<div class="product-head">
+<div class="badge">СдалВсрок</div>
+<h3>Отчетность в ЦБ для небольших банков</h3>
+<p class="sub">Готовая отчетность в ЦБ из данных вашего банка. Резервы, группировки и формы — автоматически, с проверкой до документа.</p>
+</div>
+<div class="cols">
+<div class="tile">
+<div class="tile-top">
+<div aria-hidden="true" class="icon-wrap"><svg class="icon" fill="none" viewbox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"></path></svg></div>
+<h4>Резервы и группировки</h4>
+</div>
+<p>Кредиты, залоги, категории качества — автоматически раскладываются по правилам ЦБ. Не нужно руками разносить сделки по группам.</p>
+</div>
+<div class="tile">
+<div class="tile-top">
+<div aria-hidden="true" class="icon-wrap">
+<svg class="icon" fill="none" viewbox="0 0 24 24"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"></path><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"></path><path d="M9 12h6M9 15h6" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
+</div>
+<h4>Готовые формы, а не сбор данных</h4>
+</div>
+<p>На выходе — заполненные формы для ЦБ. Данные берутся из АБС и ведомости, которые уже есть. Не надо каждый раз собирать с нуля.</p>
+</div>
+<div class="tile">
+<div class="tile-top">
+<div aria-hidden="true" class="icon-wrap">
+<svg class="icon" fill="none" viewbox="0 0 24 24"><path d="M4 19V5" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M4 19h16" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M7 15l4-4 3 3 5-7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</div>
+<h4>Любую строку можно проверить</h4>
+</div>
+<p>От итоговой цифры в форме — до конкретного кредита, залога и документа. Любой расчёт можно перепроверить за минуту.</p>
+</div>
+</div>
+<div class="product-cta">
+<button class="btn primary" onclick="openModal()">Обсудить СдалВсрок</button>
+<a class="btn ghost" href="#how">Как это работает</a>
+</div>
+</div>
+<div class="product" id="product2">
+<div class="product-head">
+<div class="badge">ЗакладнаяIQ</div>
+<h3>Оценка ипотечного портфеля по факту</h3>
+<p class="sub">Расчёт стоимости ипотечных закладных по реальным платежам заёмщиков. Загружаете реестр — видите, сколько стоит каждая закладная и портфель целиком.</p>
+</div>
+<div class="cols">
+<div class="tile">
+<div class="tile-top">
+<div aria-hidden="true" class="icon-wrap">
+<svg class="icon" fill="none" viewbox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8.5-8 8.5S4 18 4 13V7l8-4Z" stroke="currentColor" stroke-width="1.8"></path><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</div>
+<h4>Цена и доходность портфеля</h4>
+</div>
+<p>Загружаете реестр закладных — получаете стоимость, доходность и риск по каждой сделке и пулу. Расчёт по фактическим платежам, регулярно, а не раз в квартал.</p>
+</div>
+<div class="tile">
+<div class="tile-top">
+<div aria-hidden="true" class="icon-wrap">
+<svg class="icon" fill="none" viewbox="0 0 24 24"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"></path><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"></path><path d="M9 12h6M9 15h6" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
+</div>
+<h4>Проверка комплектности</h4>
+</div>
+<p>Автоматически проверяем документы по каждой закладной — что есть, чего не хватает, где расхождения с реестром.</p>
+</div>
+<div class="tile">
+<div class="tile-top">
+<div aria-hidden="true" class="icon-wrap">
+<svg class="icon" fill="none" viewbox="0 0 24 24"><path d="M10 13a5 5 0 0 1 0-7l1.2-1.2a5 5 0 0 1 7.1 7.1L17 13" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M14 11a5 5 0 0 1 0 7L12.8 19.2a5 5 0 1 1-7.1-7.1L7 11" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
+</div>
+<h4>Единые правила оценки</h4>
+</div>
+<p>Одинаковые сделки оцениваются одинаково. Не зависит от того, кто считал — правила зафиксированы, результат воспроизводим.</p>
+</div>
+</div>
+<div class="product-cta">
+<button class="btn primary" onclick="openModal()">Обсудить ЗакладнаяIQ</button>
+<a class="btn ghost" href="#how">Как это работает</a>
+</div>
+</div>
+</div>
+</section>
+<section id="how">
+<div class="wrap">
+<div class="section-title">
+<div>
+<h2>Как это работает</h2>
+<p class="sub">Одинаковый процесс для обоих продуктов — меняются только входные данные и результат на выходе.</p>
+</div>
+</div>
+<div class="steps">
+<div class="step">
+<div class="step-top">
+<div class="num">1</div>
+<svg aria-hidden="true" class="icon muted" fill="none" viewbox="0 0 24 24"><path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"></path><path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"></path></svg>
+</div>
+<h4>Загружаете данные</h4>
+<p>Выгрузки из АБС, реестры, таблицы — в любом формате, который у вас есть.</p>
+</div>
+<div class="step">
+<div class="step-top">
+<div class="num">2</div>
+<svg aria-hidden="true" class="icon muted" fill="none" viewbox="0 0 24 24"><path d="M7 7h10M7 12h10M7 17h10" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
+</div>
+<h4>Приводим в порядок</h4>
+<p>Убираем дубли, находим пропуски, приводим к единому формату.</p>
+</div>
+<div class="step">
+<div class="step-top">
+<div class="num">3</div>
+<svg aria-hidden="true" class="icon muted" fill="none" viewbox="0 0 24 24"><path d="M10 13a5 5 0 0 1 0-7l1.2-1.2a5 5 0 0 1 7.1 7.1L17 13" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M14 11a5 5 0 0 1 0 7L12.8 19.2a5 5 0 1 1-7.1-7.1L7 11" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
+</div>
+<h4>Считаем</h4>
+<p>Применяем правила, делаем расчёты — резервы, стоимость, группировки.</p>
+</div>
+<div class="step">
+<div class="step-top">
+<div class="num">4</div>
+<svg aria-hidden="true" class="icon muted" fill="none" viewbox="0 0 24 24"><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.8"></path></svg>
+</div>
+<h4>Получаете результат</h4>
+<p>Готовые формы, отчёты или оценка портфеля. Каждую цифру можно проверить до исходного документа.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="security">
+<div class="wrap">
+<div class="section-title">
+<div>
+<h2>Безопасность и подключение</h2>
+<p class="sub">Сервис для самостоятельной работы банка. Вы загружаете данные, получаете результат — всё под вашим контролем.</p>
+</div>
+</div>
+<div class="two">
+<div class="box">
+<h3>Безопасность данных</h3>
+<ul>
+<li>Данные банка не передаются третьим лицам.</li>
+<li>Контроль доступа и журналирование всех действий.</li>
+<li>Раздельное хранение по проектам.</li>
+<li>Можно начать на обезличенных данных, чтобы проверить до подключения боевых.</li>
+</ul>
+</div>
+<div class="box">
+<h3>Как устроен сервис</h3>
+<ul>
+<li>Загружаете выгрузки из АБС — получаете готовый результат.</li>
+<li>Работаете сами, в своём темпе, без зависимости от подрядчика.</li>
+<li>Помогаем подключиться и настроить на старте.</li>
+<li>Поддержка — по запросу, когда нужна.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
 </main>
-
-  <footer>
-    <div class="wrap">
-      <div class="f">
-        <div>
-          <div class="logo" style="margin-bottom:6px"><div class="mark" aria-hidden="true" style="display:grid;place-items:center">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8" />
-              <path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8" />
-              <path d="M9 12h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </div><div>ФактПакет</div></div>
-        </div>
-        <div style="display:grid; gap:8px">
-          <small>Контакты: <a href="mailto:help@faktpaket.ru">help@faktpaket.ru</a></small>
-          <small>© 2026</small>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Modal -->
-  <div class="modal" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
-    <div class="panel">
-      <div class="head">
-        <div>
-          <h3 id="demoTitle">Связаться</h3>
-          <p>Расскажите, с какими кейсами/портфелями работаете и какие вопросы нужно закрыть — предложим формат результата и пример на выборке.</p>
-        </div>
-        <button class="close" id="closeDemo" aria-label="Закрыть">×</button>
-      </div>
-
-      <form id="demoForm">
-        <label>
+<footer>
+<div class="wrap">
+<div class="f">
+<div>
+<div class="logo" style="margin-bottom:6px"><div aria-hidden="true" class="mark" style="display:grid;place-items:center">
+<svg aria-hidden="true" class="icon" fill="none" viewbox="0 0 24 24">
+<path d="M7 4h7l3 3v13H7V4Z" stroke="currentColor" stroke-width="1.8"></path>
+<path d="M14 4v4h4" stroke="currentColor" stroke-width="1.8"></path>
+<path d="M9 12h6M9 15h6" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+</svg>
+</div><div>ФактПакет</div></div>
+</div>
+<div style="display:grid; gap:8px">
+<small>Контакты: <a href="mailto:help@faktpaket.ru">help@faktpaket.ru</a></small>
+<small>© 2026</small>
+</div>
+</div>
+</div>
+</footer>
+<!-- Modal -->
+<div aria-labelledby="demoTitle" aria-modal="true" class="modal" id="demoModal" role="dialog">
+<div class="panel">
+<div class="head">
+<div>
+<h3 id="demoTitle">Связаться</h3>
+<p>Расскажите, что для вас сейчас критично: снизить стоимость сопровождения активов, ускорить оценку ипотечного пула или убрать авралы по отчетности в ЦБ — предложим формат результата и пример на выборке.</p>
+</div>
+<button aria-label="Закрыть" class="close" id="closeDemo">×</button>
+</div>
+<form id="demoForm">
+<label>
           Имя
-          <input name="name" required placeholder="Константин" />
-        </label>
-        <label>
+          <input name="name" placeholder="Константин" required=""/>
+</label>
+<label>
           Email
-          <input name="email" type="email" required placeholder="help@faktpaket.ru" />
-        </label>
-        <label>
+          <input name="email" placeholder="help@faktpaket.ru" required="" type="email"/>
+</label>
+<label>
           Компания
-          <input name="company" required placeholder="Банк / взыскание / проблемные активы" />
-        </label>
-        <label>
+          <input name="company" placeholder="Банк, ипотека, бэк-офис, отчетность" required=""/>
+</label>
+<label>
           Что нужно разобрать
-          <textarea name="note" placeholder="Например: залоговые дела / портфель NPL — нужны факторы взыскания, качество залога и сценарная оценка сроков и вероятности возврата со ссылками на документы."></textarea>
-        </label>
-
-        <button class="btn primary" type="submit">Отправить →</button>
-        <div class="hint">Напишите свои вопросы и мы свяжемся с вами!</div>
-      </form>
-    </div>
-  </div>
-
-  <script>
+          <textarea name="note" placeholder="Например: есть купленный ипотечный портфель — нужна быстрая оценка закладных и прогноз поступлений; или нужно автоматизировать подготовку отчетности в ЦБ и расчет резервов по однотипным сделкам."></textarea>
+</label>
+<button class="btn primary" type="submit">Отправить →</button>
+<div class="hint">Напишите свои вопросы и мы свяжемся с вами!</div>
+</form>
+</div>
+</div>
+<script>
     const modal = document.getElementById('demoModal');
     const openers = ['openDemoTop','openDemoHero'].map(id => document.getElementById(id));
     const closeBtn = document.getElementById('closeDemo');
@@ -653,7 +640,7 @@ section{padding:86px 0}
       const company = (data.get('company')||'').toString().trim();
       const note = (data.get('note')||'').toString().trim();
 
-      const subject = encodeURIComponent('Запрос пилота сервиса ФактПакет');
+      const subject = encodeURIComponent('Запрос: автоматизация активов, оценка ипотеки, отчетность (ФактПакет)');
       const body = encodeURIComponent(
         'Имя: ' + name + '\n' +
         'Email: ' + email + '\n' +
