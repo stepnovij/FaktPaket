@@ -4,8 +4,12 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>ФактПакет — интеллектуальная автоматизация для банков</title>
-<meta content="Интеллектуальная автоматизация для банков: два продукта: СдалВсрок для учета и сопровождения активов и ЗакладнаяIQ для оценки ипотечных портфелей и подготовки отчетности в Банк России." name="description"/>
+<title>ФактПакет — автоматизация банковских процессов</title>
+<meta content="СдалВсрок — отчетность в ЦБ для небольших банков. ЗакладнаяIQ — оценка ипотечных закладных по реальным платежам." name="description"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="ФактПакет — автоматизация банковских процессов"/>
+<meta property="og:description" content="СдалВсрок — отчетность в ЦБ для небольших банков. ЗакладнаяIQ — оценка ипотечных закладных по реальным платежам."/>
+<meta property="og:locale" content="ru_RU"/>
 <style>
     :root{
       --bg:#0b0f17;
@@ -315,11 +319,60 @@ section{padding:48px 0}
 .pill{padding:10px 14px}
 .pill .icon{width:16px;height:16px}
 .watermark{width:160px;height:160px;right:10px;top:10px}
+/* Burger button */
+.burger{
+  display:none;
+  appearance:none;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.06);
+  color:var(--text);
+  padding:8px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:18px;
+  line-height:1;
+}
+
 @media (max-width: 860px){
-  section{padding:72px 0}
-  .hero{padding:72px 0}
+  section{padding:48px 0}
+  .hero{padding:0}
   .tile{min-height:unset}
   .step{min-height:unset}
+  .burger{display:block}
+  nav{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    flex-direction:column;
+    background:rgba(11,15,23,.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:16px 20px;
+    gap:4px;
+  }
+  nav.open{display:flex}
+  nav a{padding:12px 10px;font-size:16px}
+  nav .btn{width:100%;text-align:center}
+  .top .bar{position:relative}
+  #products .cols{grid-template-columns:1fr}
+  #products .product + .product{margin-top:64px}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .two{grid-template-columns:1fr}
+  .hero .card{padding:0 20px 32px}
+  .hero h1{font-size:32px}
+  .hero .mini{flex-direction:column;align-items:center}
+  .product-head h3{font-size:20px}
+  .product-cta{flex-direction:column}
+  .product-cta .btn{width:100%;text-align:center}
+}
+
+@media (max-width: 520px){
+  .steps{grid-template-columns:1fr}
+  .hero h1{font-size:26px}
+  .hero .lead{font-size:14px}
+  .cols{grid-template-columns:1fr}
 }
 
 
@@ -361,7 +414,8 @@ section{padding:48px 0}
 </div>
 <div>ФактПакет</div>
 </div>
-<nav aria-label="Навигация">
+<button class="burger" id="burgerBtn" aria-label="Меню">&#9776;</button>
+<nav aria-label="Навигация" id="mainNav">
 <a href="#products">Продукты</a><a href="#product1">СдалВсрок</a><a href="#product2">ЗакладнаяIQ</a>
 <a href="#how">Как работает</a>
 <a href="#security">Безопасность</a>
@@ -571,7 +625,7 @@ section{padding:48px 0}
 </div><div>ФактПакет</div></div>
 </div>
 <div style="display:grid; gap:8px">
-<small>Контакты: <a href="mailto:help@faktpaket.ru">help@faktpaket.ru</a></small>
+<small>Контакты: <a href="mailto:support@buhtab.ru">support@buhtab.ru</a></small>
 <small>© 2026</small>
 </div>
 </div>
@@ -594,7 +648,7 @@ section{padding:48px 0}
 </label>
 <label>
           Email
-          <input name="email" placeholder="help@faktpaket.ru" required="" type="email"/>
+          <input name="email" placeholder="support@buhtab.ru" required="" type="email"/>
 </label>
 <label>
           Компания
@@ -613,6 +667,20 @@ section{padding:48px 0}
     const modal = document.getElementById('demoModal');
     const openers = ['openDemoTop','openDemoHero'].map(id => document.getElementById(id));
     const closeBtn = document.getElementById('closeDemo');
+
+    // Burger menu
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mainNav = document.getElementById('mainNav');
+    burgerBtn.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
+      burgerBtn.textContent = mainNav.classList.contains('open') ? '\u2715' : '\u2630';
+    });
+    mainNav.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        burgerBtn.textContent = '\u2630';
+      });
+    });
 
     function openModal(){
       modal.classList.add('open');
@@ -650,7 +718,7 @@ section{padding:48px 0}
       );
 
       // TODO: замените email на ваш рабочий
-      window.location.href = `mailto:help@faktpaket.ru?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:support@buhtab.ru?subject=${subject}&body=${body}`;
       closeModal();
     });
   </script>
